@@ -4,7 +4,7 @@ import { Image, StyleSheet, Text, View } from "react-native";
 const Post = ({ item }) => {
   const [
     {
-      "media-metadata": [, , { url }],
+      "media-metadata": [, { url }],
     },
   ] = item.media;
   return (
