@@ -10,11 +10,12 @@ import {
 } from "react-native";
 import Post from "./Post";
 
-const NewsList = () => {
-  const navigation = useNavigation();
+const NewsList = ({ navigation }) => {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [page, setPage] = useState(0);
+
+  // const navigation = useNavigation();
 
   const getPosts = async () => {
     try {
@@ -67,7 +68,9 @@ const NewsList = () => {
           }}
           data={data}
           renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => navigation.navigate("Post", item)}>
+            <TouchableOpacity
+              onPress={() => navigation.navigate("PostScreen", item)}
+            >
               <Post item={item} key={item.id} />
             </TouchableOpacity>
           )}

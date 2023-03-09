@@ -1,12 +1,13 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 
 import NewsList from "../components/NewsList";
 
-export default function HomeScreen({ navigation }) {
+export default function StorageScreen({ navigation }) {
   return (
     <View style={styles.container}>
-      <NewsList navigation={navigation}></NewsList>
+      {/* <NewsList></NewsList> */}
+      <Text>RTTRTY</Text>
     </View>
   );
 }

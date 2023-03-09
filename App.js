@@ -1,13 +1,18 @@
-import { Navigation } from './screens/Navigation';
+import {
+  HomeNavigation,
+  TabNavigation
+} from './screens/Navigation';
 import {
   StatusBar,
 } from 'react-native';
 
 export default function App() {
   return (
-    <><Navigation />
+    <>
+      <HomeNavigation />
       <StatusBar
         backgroundColor="#567b95"
+        barStyle='dark-content'
       />
     </>
   );
