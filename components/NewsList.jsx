@@ -14,14 +14,21 @@ const NewsList = () => {
   const navigation = useNavigation();
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
+  const [page, setPage] = useState(0);
 
   const getPosts = async () => {
     try {
       const response = await fetch(
-        "https://api.nytimes.com/svc/mostpopular/v2/viewed/1.json?api-key=C1NeVBIaw5xjoPcY4xVAu0YDsv3UxGsx"
+        `https://api.nytimes.com/svc/news/v3/content/all/all.json?limit=20&offset=${page}&api-key=C1NeVBIaw5xjoPcY4xVAu0YDsv3UxGsx`,
+        {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+          },
+        }
       );
       const json = await response.json();
-      setData(json.results);
+      setData([...data, ...json.results]);
     } catch (error) {
       Alert.alert("Error", "Fetch was failed");
     } finally {
@@ -30,8 +37,8 @@ const NewsList = () => {
   };
 
   useEffect(() => {
-    setTimeout(getPosts, 2000);
-  }, []);
+    getPosts();
+  }, [page]);
 
   if (isLoading) {
     return (
@@ -44,20 +51,26 @@ const NewsList = () => {
     return (
       <>
         <FlatList
+          style={styles.newsList}
           refreshControl={
             <RefreshControl
               refreshing={isLoading}
-              onRefresh={getPosts}
+              onRefresh={() => {
+                setPage(0);
+                setData([]);
+              }}
             ></RefreshControl>
           }
-          style={styles.newsList}
+          onEndReachedThreshold={0.5}
+          onEndReached={() => {
+            setPage(page + 20);
+          }}
           data={data}
           renderItem={({ item }) => (
             <TouchableOpacity onPress={() => navigation.navigate("Post", item)}>
-              <Post item={item} />
+              <Post item={item} key={item.id} />
             </TouchableOpacity>
           )}
-          keyExtractor={(item) => item.id}
           contentContainerStyle={{ paddingBottom: 40 }}
         ></FlatList>
       </>
@@ -68,8 +81,6 @@ const NewsList = () => {
 const styles = StyleSheet.create({
   newsList: {
     flex: 1,
-    padding: 20,
-    backgroundColor: "white",
   },
 });
 

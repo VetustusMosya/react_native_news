@@ -1,7 +1,14 @@
 import { Navigation } from './screens/Navigation';
+import {
+  StatusBar,
+} from 'react-native';
 
 export default function App() {
   return (
-    <Navigation />
+    <><Navigation />
+      <StatusBar
+        backgroundColor="#567b95"
+      />
+    </>
   );
 }
