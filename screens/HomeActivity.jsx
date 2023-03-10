@@ -4,9 +4,13 @@ import { StyleSheet, View } from "react-native";
 import NewsList from "../components/NewsList";
 
 export default function HomeScreen({ navigation }) {
+  const openPost = (item) => {
+    navigation.navigate("PostScreen", item);
+  };
+
   return (
     <View style={styles.container}>
-      <NewsList navigation={navigation}></NewsList>
+      <NewsList navigation={navigation} openPost={openPost}></NewsList>
     </View>
   );
 }

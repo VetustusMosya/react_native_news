@@ -1,7 +1,7 @@
 import React from "react";
 import { Image, StyleSheet, Text, View, TouchableOpacity } from "react-native";
 
-const Post = ({ item, key }) => {
+const Post = ({ item, key, fun, action }) => {
   item.multimedia
     ? ([, { url }, ,] = item.multimedia)
     : (url =
@@ -23,11 +23,8 @@ const Post = ({ item, key }) => {
       <Image style={styles.imagine} source={{ uri: `${url}` }} />
       <View style={styles.details}>
         <Text style={styles.text}>{cutTitle(item.title, 70)}</Text>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => console.log("pressed")}
-        >
-          <Text style={styles.like}>SAVE</Text>
+        <TouchableOpacity style={styles.button} onPress={() => fun(item)}>
+          <Text style={styles.like}>{action}</Text>
         </TouchableOpacity>
       </View>
     </View>

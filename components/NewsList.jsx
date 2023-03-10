@@ -7,15 +7,15 @@ import {
   ActivityIndicator,
   RefreshControl,
   TouchableOpacity,
+  ToastAndroid,
 } from "react-native";
 import Post from "./Post";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const NewsList = ({ navigation }) => {
+const NewsList = ({ openPost }) => {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState([]);
   const [page, setPage] = useState(0);
-
-  // const navigation = useNavigation();
 
   const getPosts = async () => {
     try {
@@ -40,6 +40,17 @@ const NewsList = ({ navigation }) => {
   useEffect(() => {
     getPosts();
   }, [page]);
+
+  const savePost = async (item) => {
+    try {
+      const key = item.slug_name;
+      const jsonItem = JSON.stringify(item);
+      await AsyncStorage.setItem(key, jsonItem);
+      ToastAndroid.show("Succeed", ToastAndroid.SHORT);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   if (isLoading) {
     return (
@@ -68,10 +79,8 @@ const NewsList = ({ navigation }) => {
           }}
           data={data}
           renderItem={({ item }) => (
-            <TouchableOpacity
-              onPress={() => navigation.navigate("PostScreen", item)}
-            >
-              <Post item={item} key={item.id} />
+            <TouchableOpacity onPress={() => openPost(item)}>
+              <Post item={item} key={item.id} fun={savePost} action={"SAVE"} />
             </TouchableOpacity>
           )}
           contentContainerStyle={{ paddingBottom: 40 }}

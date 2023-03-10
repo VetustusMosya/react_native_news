@@ -49,7 +49,10 @@ const Tab = createMaterialTopTabNavigator();
 
 export const TabNavigation = () => {
 	return (
-		<Tab.Navigator initialRouteName="Tabs" >
+		<Tab.Navigator initialRouteName="Tabs"
+			screenOptions={{
+				style: { color: 'red' },
+			}}>
 			<Tab.Screen name='NewsScreen' component={HomeScreen} options={{ title: 'News' }} />
 			<Tab.Screen name='StorageScreen' component={StorageScreen} options={{ title: 'Storage' }} />
 		</Tab.Navigator>

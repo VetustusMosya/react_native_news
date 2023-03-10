@@ -12,7 +12,7 @@ export default function App() {
       <HomeNavigation />
       <StatusBar
         backgroundColor="#567b95"
-        barStyle='dark-content'
+        barStyle='auto'
       />
     </>
   );
